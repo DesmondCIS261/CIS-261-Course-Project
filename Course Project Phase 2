@@ -1,0 +1,62 @@
+def get_date_range():
+    while True:
+        start_date = input("Enter the start date (mm/dd/yyyy): ")
+        end_date = input("Enter the end date (mm/dd/yyyy): ")
+        if len(start_date) != 10 or len(end_date) != 10:
+            print("Invalid date format. Please enter dates in mm/dd/yyyy format.")
+        else:
+            break
+    return start_date, end_date
+def calculate_pay(hours, hourly_rate, tax_rate):
+    gross_pay = hours * hourly_rate
+    income_tax = gross_pay * tax_rate
+    net_pay = gross_pay - income_tax
+    return gross_pay, income_tax, net_pay
+def main():
+    employee_data = []
+    total_employees = 0
+    total_hours = 0
+    total_tax = 0
+    total_net_pay = 0
+    while True:
+        start_date, end_date = get_date_range()
+        name = input("Enter employee name: ")
+        hours = float(input("Enter total hours worked: "))
+        hourly_rate = float(input("Enter hourly rate: "))
+        tax_rate = float(input("Enter income tax rate (decimal form): "))
+        gross_pay, income_tax, net_pay = calculate_pay(hours, hourly_rate, tax_rate)
+        employee_data.append({
+            "start_date": start_date,
+            "end_date": end_date,
+            "name": name,
+            "hours": hours,
+            "hourly_rate": hourly_rate,
+            "gross_pay": gross_pay,
+            "tax_rate": tax_rate,
+            "income_tax": income_tax,
+            "net_pay": net_pay
+        })
+        total_employees += 1
+        total_hours += hours
+        total_tax += income_tax
+        total_net_pay += net_pay
+        another = input("Do you want to enter another employee? (y/n): ")
+        if another.lower() != "y":
+            break
+    for data in employee_data:
+        print(f"Employee: {data['name']}")
+        print(f"Date Range: {data['start_date']} - {data['end_date']}")
+        print(f"Hours: {data['hours']}")
+        print(f"Hourly Rate: ${data['hourly_rate']:.2f}")
+        print(f"Gross Pay: ${data['gross_pay']:.2f}")
+        print(f"Tax Rate: {data['tax_rate']*100:.2f}%")
+        print(f"Income Tax: ${data['income_tax']:.2f}")
+        print(f"Net Pay: ${data['net_pay']:.2f}")
+        print()    
+    print("Totals:")
+    print(f"Total Employees: {total_employees}")
+    print(f"Total Hours: {total_hours:.2f}")
+    print(f"Total Tax: ${total_tax:.2f}")
+    print(f"Total Net Pay: ${total_net_pay:.2f}")
+if __name__ == "__main__":
+    main()
